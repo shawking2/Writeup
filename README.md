@@ -1,5 +1,5 @@
 # Writeup X-MASCTF 
-> # <font color="green"> Author: Quasar (Team: UIT.ζp33d_0∫_Ψ1m3) </font>
+#<span style="color: green"> Author: Quasar (Team: UIT.ζp33d_0∫_Ψ1m3)</span>
 # Challenge Name : ![screenshot](https://github.com/19520611/Writeup/raw/main/xmasCTF/img/doiknowyou1.PNG)
 Bài này có điểm số là 45. Đầu mình sẽ đi vào những phân tích cơ bản qua các lệnh file và checksec:
 ```
