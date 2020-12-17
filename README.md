@@ -47,7 +47,7 @@ X-MAS{ah_yes__i_d0_rememb3r_you}
 Ban đầu thì mình nghĩ challenge này khá là bưởi nhưng sau đó mình mới biết challenge này còn liên quan đến 1 challenge khác đó là "Ministerul Mediului" (chall này mình giải chưa ra nên ko viết writeup được :) )  
 > flag: X-MAS{ah_yes__i_d0_rememb3r_you}
 
-# Challenge Name: ![screenshot](https://github.com/19520611/Writeup/blob/main/xmasCTF/img/naughty1.PNG)
+# Challenge Name: ![screenshot](https://github.com/19520611/Writeup/blob/main/xmasCTF/img/naughty2.PNG)
 
 
 
