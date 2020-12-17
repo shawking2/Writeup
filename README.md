@@ -1,5 +1,5 @@
 # Writeup X-MASCTF 
-<span style="color: green"> Author: Quasar (Team: UIT.ζp33d_0∫_Ψ1m3)</span>
+> # Author: Quasar (Team: UIT.ζp33d_0∫_Ψ1m3)
 # Challenge Name : ![screenshot](https://github.com/19520611/Writeup/raw/main/xmasCTF/img/doiknowyou1.PNG)
 Bài này có điểm số là 45. Đầu mình sẽ đi vào những phân tích cơ bản qua các lệnh file và checksec:
 ```
@@ -44,6 +44,9 @@ higgs@DESKTOP-PMDB9KR:/mnt/c/Users/19520/Music/X-MasCTF/doiknowyou$ python echal
 X-MAS{ah_yes__i_d0_rememb3r_you}
 [*] Got EOF while reading in interactive
 ```
-Ban đầu thì mình nghĩ challenge này khá là bưởi nhưng sau đó mình mới biết ý challenge này còn liên quan đến 1 challenge khác đó là "Ministerul Mediului" (chall này mình giải chưa ra nên ko viết writeup được :) )  > flag: X-MAS{ah_yes__i_d0_rememb3r_you}
+Ban đầu thì mình nghĩ challenge này khá là bưởi nhưng sau đó mình mới biết ý challenge này còn liên quan đến 1 challenge khác đó là "Ministerul Mediului" (chall này mình giải chưa ra nên ko viết writeup được :) )  
+> flag: X-MAS{ah_yes__i_d0_rememb3r_you}
+
+# Challenge Name: 
 
 
