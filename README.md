@@ -48,6 +48,124 @@ Ban đầu thì mình nghĩ challenge này khá là bưởi nhưng sau đó mìn
 > flag: X-MAS{ah_yes__i_d0_rememb3r_you}
 
 # Challenge Name: ![screenshot](https://github.com/19520611/Writeup/blob/main/xmasCTF/img/naughty2.PNG)
+Ta bắt đầu với các bước phân tích cơ bản cách các lệnh file, checksec, seccomp-tools: 
+> checksec: 
+``` 
+higgs@DESKTOP-PMDB9KR:/mnt/c/Users/19520/Music/X-MasCTF/naughty$ gdb-gef chall
+Reading symbols from chall...
+(No debugging symbols found in chall)
+GEF for linux ready, type `gef' to start, `gef config' to configure
+88 commands loaded for GDB 10.1 using Python engine 3.9
+[*] 3 commands could not be loaded, run `gef missing` to know why.
+gef➤  checksec
+[+] checksec for '/mnt/c/Users/19520/Music/X-MasCTF/naughty/chall'
+Canary                        : ✘
+NX                            : ✘
+PIE                           : ✘
+Fortify                       : ✘
+RelRO                         : Partial
+gef➤
+```
+Qua checksec ta thấy được chương trình không bật một trình bảo về nào cả.
+> seccomp-tools:
+```
+higgs@DESKTOP-PMDB9KR:/mnt/c/Users/19520/Music/X-MasCTF/naughty$ seccomp-tools dump  ./chall
+Tell Santa what you want for XMAS
+```
+Phân tích qua seccomp-tools thì chương trình này không ngăn chặn ta gọi 1 systemcall nào.
+> file:
+```
+higgs@DESKTOP-PMDB9KR:/mnt/c/Users/19520/Music/X-MasCTF/naughty$ file chall
+chall: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 3.2.0, BuildID[sha1]=d9d6dbd83f78de807736b72dcfba4d4be904bd44, stripped
+```
+Qua lệnh file cung cấp cho ta thông tin đây là 1 tệp elf 64 bit, nhưng còn 1 điều, bạn hãy chú ý từ cuối cùng ```stripped```. Mình có biết chút ít về stripped, khi 1 chương trình dược biên dịch theo cách thông thường thì gcc sẽ thêm các debugging symbols vào file binary để cho debug đơn giản hơn, nhưng khi biên dịch bằng gcc sử dụng flag ```-s``` (stripped) thì trình biên dịch sẽ gỡ bỏ các debugging symbols làm cho kích cỡ của file sẽ nhỏ hơn và việc debug trở nên khó khăn hơn.
+
+Muốn biết stripped gây khó khăn cho debug như thế nào các bạn hãy mở ```gdb``` lên và gõ lệnh info function:
+```
+higgs@DESKTOP-PMDB9KR:/mnt/c/Users/19520/Music/X-MasCTF/naughty$ gdb-pwndbg chall
+Reading symbols from chall...
+(No debugging symbols found in chall)
+pwndbg: loaded 192 commands. Type pwndbg [filter] for a list.
+pwndbg: created $rebase, $ida gdb functions (can be used with print/break)
+pwndbg> info func
+All defined functions:
+
+Non-debugging symbols:
+0x0000000000400510  puts@plt
+0x0000000000400520  fgets@plt
+0x0000000000400530  setvbuf@plt
+0x0000000000400540  exit@plt
+pwndbg>
+```
+Các bạn có thể thấy các symbols plt hiện thị còn các hàm như main thì lại không hiện ra. Việc này sẽ gây cản trở cho các bạn đặt break point để debug. Sẽ có 1 số cách giúp chúng ta có thể debug được mình sẽ giới thiễu, 1 cách đơn giản (cách này chỉ dùng được khi Pie disable) đó là bạn tìm địa chỉ của hàm main bằng các công cụ như là IDA pro, r2, ... sau đó đặt break point tại địa chỉ đó thì ta có thể debug bình thường: 
+> Sử dụng r2 tìm địa chỉ hàm main (bạn nào ko quen dùng tools này thì dùng IDA pro lấy vẫn được nhé):
+```
+higgs@DESKTOP-PMDB9KR:/mnt/c/Users/19520/Music/X-MasCTF/naughty$ r2 chall
+[0x00400550]> aaa
+[x] Analyze all flags starting with sym. and entry0 (aa)
+[x] Analyze function calls (aac)
+[x] Analyze len bytes of instructions for references (aar)
+[x] Check for objc references
+[x] Check for vtables
+[x] Type matching analysis for all functions (aaft)
+[x] Propagate noreturn information
+[x] Use -AA or aaaa to perform additional experimental analysis.
+[0x00400550]> afl
+0x00400550    1 42           entry0
+0x00400510    1 6            sym.imp.puts
+0x00400520    1 6            sym.imp.fgets
+0x00400530    1 6            sym.imp.setvbuf
+0x00400540    1 6            sym.imp.exit
+0x00400630    5 119  -> 62   entry.init0
+0x00400600    3 34   -> 29   entry.fini0
+0x00400590    4 42   -> 37   fcn.00400590
+0x004004e8    3 23           fcn.004004e8
+0x00400637    3 159          main
+```
+Địa chỉ hàm main: 0x00400637. Có được địa chỉ của hàm main rồi thì ta đặc break point rồi debug thôi:
+```
+higgs@DESKTOP-PMDB9KR:/mnt/c/Users/19520/Music/X-MasCTF/naughty$ gdb-pwndbg chall
+Reading symbols from chall...
+(No debugging symbols found in chall)
+pwndbg: loaded 192 commands. Type pwndbg [filter] for a list.
+pwndbg: created $rebase, $ida gdb functions (can be used with print/break)
+pwndbg> b*0x00400637
+Breakpoint 1 at 0x400637
+pwndbg> r
+Starting program: /mnt/c/Users/19520/Music/X-MasCTF/naughty/chall
+pwndbg>
+Breakpoint 1, 0x0000000000400637 in ?? ()
+
+LEGEND: STACK | HEAP | CODE | DATA | RWX | RODATA
+─────────────────────────────────────────────────────────────────────[ REGISTERS ]──────────────────────────────────────────────────────────────────────
+*RAX  0x400637 ◂— push   rbp
+```
+> IDA pro để xem mã giả:
+```
+__int64 __fastcall main(__int64 a1, char **a2, char **a3)
+{
+  char s; // [rsp+0h] [rbp-30h]
+  __int16 v5; // [rsp+2Eh] [rbp-2h]
+
+  setvbuf(stdin, 0LL, 2, 0LL);
+  setvbuf(stdout, 0LL, 2, 0LL);
+  v5 = 0xE4FFu;
+  puts("Tell Santa what you want for XMAS");
+  fgets(&s, 71, stdin);
+  puts("Nice. Hope you haven't been naughty");
+  if ( v5 != 0xE4FFu )
+  {
+    puts("Oh no....no gifts for you this year :((");
+    exit(0);
+  }
+  return 0LL;
+}
+```
+Mình sẽ mô tả sơ về luồng thực thi chương trình. Chương trình khai báo 2 biến đó là v6 với offset $rbp-0x30 và v5 với offset là rbp-0x2. Ban đầu chương trình sẽ gán v5 = 0xE4FF sau đó cho cho gọi hàm fgets để nhập vào giá trị cho v5 là 71 bytes. sau đó tiếp tục kiểm tra v5 có bằng 0xE4FF hay không nếu không bằng thực hiện lệnh exit(0). 
+Nhìn qua thì ta có thể dễ dàng thấy lỗi buffer overflow xảy ra ở fgets khi offset của s bằng $rbp - 0x30  còn fgets cho ta nhật vào đến 71 == 0x47 tức là đọc dư
+0x47 - 0x30 = 0x17 (kết quả này đã tính luôn ghì đè biến v5). Với 0x17 thì ta có thể ghì đè được $rbp và return address và còn dư 7 bytes. 
+
+
 
 
 
