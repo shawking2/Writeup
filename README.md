@@ -44,9 +44,10 @@ higgs@DESKTOP-PMDB9KR:/mnt/c/Users/19520/Music/X-MasCTF/doiknowyou$ python echal
 X-MAS{ah_yes__i_d0_rememb3r_you}
 [*] Got EOF while reading in interactive
 ```
-Ban đầu thì mình nghĩ challenge này khá là bưởi nhưng sau đó mình mới biết ý challenge này còn liên quan đến 1 challenge khác đó là "Ministerul Mediului" (chall này mình giải chưa ra nên ko viết writeup được :) )  
+Ban đầu thì mình nghĩ challenge này khá là bưởi nhưng sau đó mình mới biết challenge này còn liên quan đến 1 challenge khác đó là "Ministerul Mediului" (chall này mình giải chưa ra nên ko viết writeup được :) )  
 > flag: X-MAS{ah_yes__i_d0_rememb3r_you}
 
-# Challenge Name: 
+# Challenge Name: ![screenshot](https://github.com/19520611/Writeup/blob/main/xmasCTF/img/naughty1.PNG)
+
 
 
