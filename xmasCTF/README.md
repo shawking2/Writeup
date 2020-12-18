@@ -51,7 +51,7 @@ code khai thác của mình: [echall.py](https://github.com/19520611/Writeup/blo
 
 # Challenge Name: 
 ![screenshot](https://github.com/19520611/Writeup/blob/main/xmasCTF/img/naughty2.PNG)
-Ta bắt đầu với các bước phân tích cơ bản cách các lệnh file, checksec, seccomp-tools: 
+! Ta bắt đầu với các bước phân tích cơ bản cách các lệnh file, checksec, seccomp-tools: 
 > checksec: 
 ``` 
 higgs@DESKTOP-PMDB9KR:/mnt/c/Users/19520/Music/X-MasCTF/naughty$ gdb-gef chall
