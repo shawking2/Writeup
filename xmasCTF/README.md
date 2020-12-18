@@ -1,7 +1,7 @@
 # Writeup X-MASCTF 
 > # Author: Quasar (Team: UIT.ζp33d_0∫_Ψ1m3)
 # Challenge Name : ![screenshot](https://github.com/19520611/Writeup/raw/main/xmasCTF/img/doiknowyou1.PNG)
-Bài này có điểm số là 45. Đầu mình sẽ đi vào những phân tích cơ bản qua các lệnh file và checksec:
+Bài này có điểm số là 45. Đầu tiên mình sẽ đi vào những phân tích cơ bản qua các lệnh file và checksec:
 ```
 higgs@DESKTOP-PMDB9KR:/mnt/c/Users/19520/Music/X-MasCTF/doiknowyou$ file chall
 chall: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 3.2.0, BuildID[sha1]=e0e53c0345a73991671f9f6548621739ae38efda, stripped
