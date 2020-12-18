@@ -275,14 +275,14 @@ __int64 __fastcall main(__int64 a1, char **a2, char **a3)
 }
 ```
 ### Mình sẽ nói qua luồng thực thi chính của chương trình. Chương trình sẽ cho ta nhập vào từ buffer haystack tại offset $rbp-0x40 với hàm gets -> lỗi buffer overflow. Sau đó kiểm tra chuỗi ta nhập vào có xuất hiện 1 trong 2 ký chuỗi "sh" và "cat" thì chương trình sẽ thực hiện hàm exit(0).
-### Ý tưởng khai thác của mình đó là sử dụng kỹ thuật điều khiển $rbp trỏ qua phân vùng .bss như trên bởi vì bạn có thể để ý biến  byte_601099 sẽ được gán bằng 1 ở trên hàm mprotect nếu quay lại thì chương trình sẽ kiểm tra giá trị của nó nếu nó bầng 1 thì sẽ exit ngay. Nếu bạn sử dụng kỹ thuật ret2libc thông thường thì bạn bắt buộc phải quay lại đầu hàm main bởi vì lúc lệnh leave thực thi thì $rbp sẽ mang giá trị 0x4141414141414141 (giá trị rác mà bạn đã đè ở payload đầu tiên) với kỹ thuật này bạn phải quay lại hàm main nơi có 2 lệnh:
+### Ý tưởng khai thác của mình đó là sử dụng kỹ thuật điều khiển $rbp trỏ đến phân vùng .bss như trên bởi vì bạn có thể để ý biến  byte_601099 sẽ được gán bằng 1 ở trên hàm mprotect nếu quay lại thì chương trình sẽ kiểm tra giá trị của nó nếu nó bầng 1 thì sẽ exit ngay. Nếu bạn sử dụng kỹ thuật ret2libc thông thường thì bạn bắt buộc phải quay lại đầu hàm main bởi vì lúc lệnh leave thực thi thì $rbp sẽ mang giá trị 0x4141414141414141 (giá trị rác mà bạn đã đè ở payload đầu tiên) với kỹ thuật này bạn phải quay lại hàm main nơi có 2 lệnh:
 ```
 push rbp
 mov rbp, rsp
 ```
 ### Nếu ko qua 2 lệnh này thì $rbp sẽ mang giá trị rác và chương trình sẽ bị crash. Nếu quay lại đầu hàm main thì ở ```if(byte_601099)``` chương trình sẽ nhảy vào ```exit(0)``` và kết thúc. Vì vậy ta cần 1 địa chỉ xác định để ghì đè $rbp. Nên mình sẽ sử dụng kỹ thuật cũ như bài trên. Tiếp theo là hàm strstr hàm này sẽ đọc chuỗi nhập vào để so sánh đến khi gặp ký tự NUll vì vậy ta có thể chèn vào '\x00' để hàm này ko tiếp tục kiểm tra để ta có thể chạy dc system("/bin/sh"). 
 ### Đó là các vấn đề ta phải vượt qua, phần còn lại ta dùng kỹ thuật ret2libc để leak ra địa chỉ của một hàm bất kỳ sau đó trừ cho offset của nó là ra được địa chỉ libc base. Cộng các địa chỉ này vs offset lấy từ libc ta sẽ có được hàm libc tương ứng.
-### Mình sẽ nói sơ qua về kỹ thuật ret2libc. Ở payload đầu tiên ta sẽ return address là địa chỉ gadget ```pop rdi ; ret``` ta tìm địa chỉ này bằng cách dùng công cụ ROPgadget:
+### Mình sẽ nói sơ qua về kỹ thuật ret2libc. Ở payload đầu tiên ta sẽ ghì đè return address là địa chỉ gadget ```pop rdi ; ret``` ta tìm địa chỉ này bằng cách dùng công cụ ROPgadget:
 ```
 higgs@DESKTOP-PMDB9KR:/mnt/c/Users/19520/Music/X-MasCTF/ready_for_xmas$ ROPgadget --binary chall
 Gadgets information
@@ -301,7 +301,7 @@ return address -> gadget: pop rdi; ret
 addr_ 1
 addr_2
 ``` 
-### Lệnh pop rdi sẽ lấy addr_1 cho vào thanh ghi rdi; ret sẽ làm ghi rip trỏ vào addr_2
+### Lệnh pop rdi sẽ lấy addr_1 cho vào thanh ghi rdi; ret sẽ làm thanh ghi $rip trỏ vào addr_2
 ### Vậy để leak được địa chỉ của 1 hàm bất kỳ ta sẽ cho rdi->got@function ; ret-> plt@puts (vì trong chương trình chỉ gọi mỗi hàm puts để in ra output nên chỉ có plt@puts là xuất ra được). got@function ở đây bạn cần thay vào địa chỉ got của 1 hàm bất kỳ nằm trong GOT của chương trình hiện tại .  GOT là viết tắt của ```global offset table``` theo mình hiểu sơ qua đó là khi 1 chương trình gọi 1 hàm trong thư viện thì nó sẽ lưu địa chỉ của hàm đó lại trong GOT để lần sau chương trình có gọi lại hàm đó thì chương trình chỉ cần lấy địa chỉ cùa hàm đó trong GOT để tái sử dụng 
 > code leak (mình sẽ tiến hành leak address của puts):
 ```
@@ -350,4 +350,4 @@ file exploit: [echall.py](https://github.com/19520611/Writeup/blob/main/xmasCTF/
 >flag: X-MAS{l00ks_lik3_y0u_4re_r3ady}
 
 
-## Cảm ơn các bạn đã đọc do kiến thức còn hạn hẹp có gì sai sót mong các bạn góp ý mình sẽ sửa ngay!!!
+## Cảm ơn các bạn đã đọc .Do kiến thức còn hạn hẹp có gì sai sót mong các bạn góp ý mình sẽ sửa ngay!!!
