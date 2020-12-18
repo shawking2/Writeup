@@ -178,7 +178,8 @@ __int64 __fastcall main(__int64 a1, char **a2, char **a3)
 └           0x004006d5      c3             ret
 ```
 Bạn hãy chú ý đến lệnh leave. Lệnh leave tương đương:
-```mov rsp, rbp
+```
+   mov rsp, rbp
    pop rbp
 ```
 Điều này có nghĩa khi ta ghè đè giá trị của $rbp trên stack lệnh leave sẽ sẽ lấy giá trị này sẽ lưu vào trong $rbp khi đó ta đã trỏ dc $rbp vào địa chỉ mong muốn. Ta sẽ tìm địa chỉ của phân vùng của .bss bằng lệnh vmmap trên gdb:
