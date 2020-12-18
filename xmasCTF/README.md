@@ -345,7 +345,7 @@ $ cat /home/ctf/flag.txt
 X-MAS{l00ks_lik3_y0u_4re_r3ady}
 $
 ```
-> flag: X-MAS{l00ks_lik3_y0u_4re_r3ady}
+flag: X-MAS{l00ks_lik3_y0u_4re_r3ady}
 >file exploit: [echall.py](https://github.com/19520611/Writeup/blob/main/xmasCTF/src/ready_for_xmas/echall.py)
 
 ## Cảm ơn các bạn đã đọc do kiến thức còn hạn hẹp có gì sai sót mong các bạn góp ý mình sẽ sửa ngay!!!
