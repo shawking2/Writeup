@@ -98,7 +98,7 @@ Non-debugging symbols:
 0x0000000000400540  exit@plt
 pwndbg>
 ```
-### Các bạn có thể thấy các symbols plt hiện thị còn các hàm như main thì lại không hiện ra. Việc này sẽ gây cản trở cho các bạn đặt break point để debug. Sẽ có 1 số cách giúp chúng ta có thể debug được mình sẽ giới thiễu, 1 cách đơn giản (cách này chỉ dùng được khi Pie disable) đó là bạn tìm địa chỉ của hàm main bằng các công cụ như là IDA pro, r2, ... sau đó đặt break point tại địa chỉ đó thì ta có thể debug bình thường: 
+### Các bạn có thể thấy các symbols plt hin thị còn các hàm như main thì lại không hiện ra. Việc này sẽ gây cản trở cho các bạn đặt break point để debug. Sẽ có 1 số cách giúp chúng ta có thể debug được, mình sẽ giới thiệu 1 cách đơn giản (cách này chỉ dùng được khi Pie disable) đó là bạn tìm địa chỉ của hàm main bằng các công cụ như là IDA pro, r2, ... sau đó đặt break point tại địa chỉ đó thì ta có thể debug bình thường: 
 > Sử dụng r2 tìm địa chỉ hàm main (bạn nào ko quen dùng tools này thì dùng IDA pro lấy vẫn được nhé):
 ```
 higgs@DESKTOP-PMDB9KR:/mnt/c/Users/19520/Music/X-MasCTF/naughty$ r2 chall
