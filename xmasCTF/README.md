@@ -240,9 +240,8 @@ X-MAS{sant4_w1ll_f0rg1ve_y0u_th1s_y3ar}
 [*] Got EOF while reading in interactive
 $
 ```
-Code khai thác: [echall.py]
+Code khai thác: [echall.py](https://github.com/19520611/Writeup/blob/main/xmasCTF/src/naughty/echall.py)
 > flag: X-MAS{sant4_w1ll_f0rg1ve_y0u_th1s_y3ar}
-(https://github.com/19520611/Writeup/blob/main/xmasCTF/src/naughty/echall.py)
 # Challenge Name: ![screenshot](https://github.com/19520611/Writeup/blob/main/xmasCTF/img/ready1.PNG)
 ### Ta tiếp tục các bước phân tích cơ bản như ở trên, mình sẽ lược bỏ bớt vì nó đã khá dài.
 ### Đây là 1 file elf 64 bits đã bị stripped nên ta sẽ sử dụng cách ở trên để debug
