@@ -212,7 +212,7 @@ Hãy chú ý đến hàng thứ 3 ta thấy được vùng nhớ .bss bắt đ�
     payload += p64(bss_addr)
     payload += p64(main)
 ```
-### Đầu tiên mình sẽ lấy đầy 40 bytes của stack bằng "A" tiếp theo mình phải ghì đè 2 byte từ $rbp -0x2 = 0xe4ff bởi vè nếu có 1 giá trị khác chương trình sẽ gọi hàm exit() và ngay lập tức sẽ ngắt chương trình khi câu lệnh return còn chưa được thực thi. 8 bytes tiếp theo chính là giá trị ghì đè $rbp, 8 bytes tiếp theo là giá trị return address mình sẽ điều hướng nó quay trở lại hàm main 1 lần nữa.
+### Đầu tiên mình sẽ lấp đầy 40 bytes của stack bằng các ký tự "A" tiếp theo mình phải ghì đè 2 byte từ $rbp -0x2 = 0xe4ff bởi vè nếu có 1 giá trị khác chương trình sẽ gọi hàm exit() và ngay lập tức sẽ ngắt chương trình khi câu lệnh return còn chưa được thực thi. 8 bytes tiếp theo chính là giá trị ghì đè $rbp, 8 bytes tiếp theo là giá trị return address mình sẽ điều hướng nó quay trở lại hàm main 1 lần nữa.
 ### Có 1 lưu ý khi quay trở lại hàm main:
 ```
 push rbp
@@ -240,8 +240,9 @@ X-MAS{sant4_w1ll_f0rg1ve_y0u_th1s_y3ar}
 [*] Got EOF while reading in interactive
 $
 ```
+Code khai thác: [echall.py]
 > flag: X-MAS{sant4_w1ll_f0rg1ve_y0u_th1s_y3ar}
-Code khai thác: [echall.py](https://github.com/19520611/Writeup/blob/main/xmasCTF/src/naughty/echall.py)
+(https://github.com/19520611/Writeup/blob/main/xmasCTF/src/naughty/echall.py)
 # Challenge Name: ![screenshot](https://github.com/19520611/Writeup/blob/main/xmasCTF/img/ready1.PNG)
 ### Ta tiếp tục các bước phân tích cơ bản như ở trên, mình sẽ lược bỏ bớt vì nó đã khá dài.
 ### Đây là 1 file elf 64 bits đã bị stripped nên ta sẽ sử dụng cách ở trên để debug
