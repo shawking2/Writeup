@@ -1,6 +1,7 @@
 # Writeup X-MASCTF 
 > # Author: Quasar (Team: UIT.ζp33d_0∫_Ψ1m3)
-# Challenge Name : ![screenshot](https://github.com/19520611/Writeup/raw/main/xmasCTF/img/doiknowyou1.PNG)
+# Challenge Name : 
+![screenshot](https://github.com/19520611/Writeup/raw/main/xmasCTF/img/doiknowyou1.PNG)
 Bài này có điểm số là 45. Đầu tiên mình sẽ đi vào những phân tích cơ bản qua các lệnh file và checksec:
 ```
 higgs@DESKTOP-PMDB9KR:/mnt/c/Users/19520/Music/X-MasCTF/doiknowyou$ file chall
@@ -48,7 +49,8 @@ X-MAS{ah_yes__i_d0_rememb3r_you}
 code khai thác của mình: [echall.py](https://github.com/19520611/Writeup/blob/main/xmasCTF/src/doiknowyou/echall.py)
 > flag: X-MAS{ah_yes__i_d0_rememb3r_you}
 
-# Challenge Name: ![screenshot](https://github.com/19520611/Writeup/blob/main/xmasCTF/img/naughty2.PNG)
+# Challenge Name: 
+![screenshot](https://github.com/19520611/Writeup/blob/main/xmasCTF/img/naughty2.PNG)
 Ta bắt đầu với các bước phân tích cơ bản cách các lệnh file, checksec, seccomp-tools: 
 > checksec: 
 ``` 
