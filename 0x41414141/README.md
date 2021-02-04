@@ -90,7 +90,7 @@ Get flag:
 
 ### ![screenshot](https://github.com/19520611/Writeup/blob/main/0x41414141/img/moving.PNG)
 
-> # Challenge: external
+> # Challenge name: external
 ## file challenge: [external](https://github.com/19520611/Writeup/blob/main/0x41414141/src/external/external?raw=true) [libc](https://github.com/19520611/Writeup/blob/main/0x41414141/src/external/libc-2.28.so?raw=true)
 
 Phân tích file:
@@ -267,7 +267,7 @@ Get flag:
 
 File solve: [exploit.py](https://github.com/19520611/Writeup/blob/main/0x41414141/src/external/external.py)
 
-> #Challenge: the_pwn_inn
+> # Challenge name: the_pwn_inn
 ## File challenge: [the_pwn_inn](https://github.com/19520611/Writeup/blob/main/0x41414141/src/the_pwn_inn/the_pwn_inn?raw=true)
 Phân tích file:
 
