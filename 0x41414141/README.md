@@ -214,7 +214,7 @@ Gadgets information
               ..................
 Unique gadgets found: 106
 ```
-Mình đã lọc bớt để có wu hiển thị gadget trên wu này. Quan sát gadget ta thấy ta có thể điều khiển được thanh ghi $rax (giá trị =0 và = 1), $rdi, $rsi và cả $rbp và $rsp nữa :)) và 1 gadget quan trọng đó là syscall.
+Mình đã lọc bớt gadget hiển thị ra để WU đỡ dài. Quan sát gadget ta thấy ta có thể điều khiển được thanh ghi $rax (giá trị =0 và = 1), $rdi, $rsi và cả $rbp và $rsp nữa :)) và 1 gadget quan trọng đó là syscall.
 > ## Ý tưởng khai thác:
 > ### payload đầu tiên:
 Ý tưởng khai thác:
