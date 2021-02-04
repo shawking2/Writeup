@@ -90,6 +90,8 @@ Get flag:
 
 ### ![screenshot](https://github.com/19520611/Writeup/blob/main/0x41414141/img/moving.PNG)
 
+### File solve: [exploit.py](https://github.com/19520611/Writeup/blob/main/0x41414141/src/moving-signals/moving.py)
+
 > # Challenge name: external
 ## file challenge: [external](https://github.com/19520611/Writeup/blob/main/0x41414141/src/external/external?raw=true) [libc](https://github.com/19520611/Writeup/blob/main/0x41414141/src/external/libc-2.28.so?raw=true)
 
@@ -353,7 +355,7 @@ Get flag:
 
 ![screenshot](https://github.com/19520611/Writeup/blob/main/0x41414141/img/thepwn.PNG)
 
-### File solve: [exploit](https://github.com/19520611/Writeup/blob/main/0x41414141/src/the_pwn_inn/ethe.py)
+### File solve: [exploit.py](https://github.com/19520611/Writeup/blob/main/0x41414141/src/the_pwn_inn/ethe.py)
 # Cảm ơn các bạn đã đọc. Do kiến thức còn hạn hẹp có sai sót mình sẽ khắc phục ngay
 
 
