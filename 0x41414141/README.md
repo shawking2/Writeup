@@ -312,7 +312,7 @@ void __noreturn vuln()
   exit(1);
 }
 ```
-Ta có thể thấy 1 rõ ràng lỗi format string ở đây. Phía dưới là hàm exit(), nên khi chạy vào hàm vuln chương trình sẽ exit ngay. Vậy thì ta chỉ cần ghì đè got của exit() bằng addr của hàm main hay vunl thì ta đã giải quyết được việc exit ngay của chương trình.
+Ta có thể thấy khá rõ lỗi format string ở đây. Phía dưới là hàm exit(), nên khi chạy vào hàm vuln chương trình sẽ exit ngay. Vậy thì ta chỉ cần ghì đè got của exit() bằng addr của hàm main hay vuln thì ta đã giải quyết được việc exit ngay của chương trình.
 > ## Ý tưởng khai thác
 > ### leak libc:
 Nhập vào chuỗi quen thuộc: 
