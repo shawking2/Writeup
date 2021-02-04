@@ -260,7 +260,11 @@ Mình đã lọc bớt để có wu hiển thị gadget trên wu này. Quan sát
 - Lúc này ta đã có libc base rồi, công việc lúc này là $rdi = address /bin/sh, gọi hàm system trong libc và lên shell.
 
 Get flag:
+
+
 ![screenshot](https://github.com/19520611/Writeup/blob/main/0x41414141/img/external.jpg)
+
+
 File solve: [exploit.py](https://github.com/19520611/Writeup/blob/main/0x41414141/src/external/external.py)
 
 
