@@ -56,7 +56,7 @@ Qua công cụ r2 ta quan sát được luồng thực thi chính của chương
 
 Ropgadget:
 ```
- ROPgadget  --binary moving-signals
+$ ROPgadget  --binary moving-signals
 Gadgets information
 ============================================================
 0x0000000000041013 : add byte ptr [rax], al ; syscall
