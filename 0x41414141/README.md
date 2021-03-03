@@ -1,6 +1,6 @@
 
 # Writeup 0x41414141
-#   Author: Quasar
+#   Author: sHawking
 > # Challenge Name : moving-signals
 
 ## file challenge:  [moving-signals](https://github.com/19520611/Writeup/blob/main/0x41414141/src/moving-signals/moving-signals?raw=true)
