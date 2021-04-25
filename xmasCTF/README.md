@@ -353,4 +353,4 @@ file exploit: [echall.py](https://github.com/19520611/Writeup/blob/main/xmasCTF/
 
 
 ## Cảm ơn các bạn đã đọc .Do kiến thức còn hạn hẹp có gì sai sót mong các bạn góp ý mình sẽ sửa ngay!!!
-## Cuối cùng, cảm ơn anh Phiêu Lãng đã giúp đỡ nhiệt tình, nhờ vậy mà em mới giải quyết được bài này.
+
