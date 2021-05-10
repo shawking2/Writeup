@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-/* gcc  -m32 -fno-stack-protector --static -o ROPbasic ROPbasic.c */
+
 
 int main()
 {
