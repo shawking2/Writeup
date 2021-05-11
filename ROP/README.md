@@ -118,7 +118,7 @@ payload += p32(int_0x80)
 p.sendline(payload)
 p.interactive()
 ```
-## Challenge ví dụ 2: [rop2](https://github.com/shawking2/Writeup/blob/main/ROP/src/rop2?raw=true)
+## Challenge 32bit: [rop2](https://github.com/shawking2/Writeup/blob/main/ROP/src/rop2?raw=true)
 
 ### Demo 64bit:
 > # Challenge name: external
@@ -289,8 +289,7 @@ Mình đã lọc bớt gadget hiển thị ra để WU đỡ dài. Quan sát gad
 ```
 > ### payload thứ 3:
 - Lúc này ta đã có libc base rồi, công việc lúc này là $rdi = address /bin/sh, gọi hàm system trong libc và lên shell.
-
-
+> File solve: [exploit.py](https://github.com/shawking2/Writeup/blob/main/0x41414141/src/external/external.py)
 
 
 
