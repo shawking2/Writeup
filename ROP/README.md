@@ -16,7 +16,7 @@ Nó được gọi là ROP vì cốt lõi là sử dụng lệnh ret trong tập
 - Kỹ năng cơ bản của rop, bạn phải đọc hiểu 1 số lệnh assembly cơ bản như: mov , lea, leave, pop, push, syscall(x64), int 0x80 (32 bit tương đương với syscall trong x64), ret, jmp, call, ...
 
 ## Ví dụ cơ bản:
-> # challagen: [ROPbasic](https://github.com/shawking2/Writeup/blob/main/ROP/src/rop?raw=true)
+> # Challenge: [ROPbasic](https://github.com/shawking2/Writeup/blob/main/ROP/src/rop?raw=true)
 
 Ta có thể dễ dàng nhận ra lỗ hổng tràn bộ đệm ở hàm gets.
 Phân tích qua lệnh file:
