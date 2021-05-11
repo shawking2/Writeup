@@ -95,8 +95,10 @@ Gadgets information
 Unique gadgets found: 4
 ```
 Chúng ta sẽ lần lượt đặt các gadget này tại địa chỉ của return addr của hàm main, tiếp sau là giá trị mà muốn các thanh ghi lưu trữ và tiếp theo là gadget tiếp theo cần thực thi. 
+
 Hình mô tả:
 ![screen](https://github.com/shawking2/Writeup/blob/main/ROP/img/imgrop.png)
+
 Code khai thác (python2):
 ```
 from pwn import *
