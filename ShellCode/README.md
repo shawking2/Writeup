@@ -129,8 +129,7 @@ int main(void)
   gets(buffer);
 }
 ```
-### File binary: [demo]
-(https://github.com/shawking2/Writeup/blob/main/ShellCode/src/demo?raw=true)
+### File binary: [demo](https://github.com/shawking2/Writeup/blob/main/ShellCode/src/demo?raw=true)
 
 
 
