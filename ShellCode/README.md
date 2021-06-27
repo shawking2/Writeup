@@ -78,8 +78,6 @@ Xâu chuỗi các mã hex lại theo thú tự như trên ta có 1 chuỗi shell
 Ta có thể viết 1 đoạn code c đẻ kiểm tra shellcode của chúng ta (lưu ý ta phải thêm tham số -z execstack để có quyền execute trên stack)
 ```
 #include <stdio.h>
-
-
 main()
 {
     unsigned char shellcode[] = "\x50\x48\x31\xd2\x48\x31\xf6\x48\xbb\x2f\x62\x69\x6e\x2f\x2f\x73\x68\x53\x54\x5f\xb0\x3b\x0f\x05";
