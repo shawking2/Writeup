@@ -32,7 +32,9 @@ section .text
 Để biên dịch nó ta sẽ đưa đoạn code này lưu vào 1 file .asm .Sau dó dùng các lệnh sau để biên dịch:
 
 > nasm -f elf64 shellcode.asm -o shellcode.o
+
 > ld shellcode.o -o shellcode
+
 Thao tác vừa rồi, ta vừa biên dịch đoạn code asm thành file binary:
 ```
 higgs@DESKTOP-PMDB9KR:~$ ./shellcode
