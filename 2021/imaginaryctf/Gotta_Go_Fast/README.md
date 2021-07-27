@@ -305,5 +305,5 @@ if __name__ == '__main__':
 ```
 ![screenshot](https://github.com/shawking2/Writeup/blob/main/2021/imaginaryctf/Gotta_Go_Fast/img/Capture.PNG)
 
-
+* "Năm 7 tuổi cứ ngỡ bắt đuọc ve sầu là có được mùa hạ. Lớn lên mới biết overwrite phờ ri húc chắc gì đã có shell" *
 
