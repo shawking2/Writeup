@@ -195,7 +195,7 @@ Vì có source code nên ta có thể thấy chức năng của các hàm khá r
 
 Tại hàm diagnostics ta sẽ leak dc libc base tại đây.
 
-Tại hàm undraft ta có thể nhập 1 idx từ 0 ->  INT_MAX để free. Sau tại hàm list_remove sau khi free tại tributes[idx] ta chọn sau đó nó tiến hành hoán đổi vị trí ta vừa free với vị trị tương ứng tại tributes[in_use-1]. Mình sẽ lợi dùng điều này để lợi dụng điều này để tạo ra fake TributeList->next mà ta có thể nhập vào giá trị mà ta mong muốn. Tại fake TributeList mình sẽ cho Fake_TributeList->in_use = 100 , Fake_TributeList->next = &__free_hook,  Fake_Tribute->tributes[0] = system. Vậy khi ta gọi undraft bằng với idx = 100 tức vị trí của system, ta sẽ ghi dc địa chỉ của hàm system vào __free_hook
+Tại hàm undraft ta có thể nhập 1 idx từ 0 ->  INT_MAX để free. Sau tại hàm list_remove sau khi free tại tributes[idx] ta chọn sau đó nó tiến hành hoán đổi vị trí ta vừa free với vị trị tương ứng tại tributes[in_use-1]. Mình sẽ lợi dùng điều này để tạo ra fake TributeList->next mà ta có thể nhập vào giá trị mà ta mong muốn. Tại fake TributeList mình sẽ cho Fake_TributeList->in_use = 100 , Fake_TributeList->next = &__free_hook,  Fake_Tribute->tributes[0] = system. Vậy khi ta gọi undraft bằng với idx = 100 tức vị trí của system, ta sẽ ghi dc địa chỉ của hàm system vào __free_hook
 
 ### Code exploit:
 ```
