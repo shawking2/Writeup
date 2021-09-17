@@ -7,7 +7,7 @@ khi ta kết nối vào server sẽ yêu cầu ta nhập password mà tác giả
 
 ![screenshot](https://github.com/shawking2/Writeup/blob/main/Csaw/2021/procrastination-simulator/img/img1.png)
 
-Ta sẽ lấy bản hexdump này về dùng ```xxd -r``` để convert nó sang binary. Sẽ có 3 challenge giống nhau như vậy. Các chương trình này chỉ khác nhau ở địa chỉ hàm ```win```. Khi ta lên shell thành công chương trình sẽ cung cấp ip , port và password cho challenge tiếp theo. Ở bài này ta tồn tại lỗi fomat string nên ta chỉ vần overwrite got_exit bằng địa chỉ hàm win ta sẽ có được shell. Code khai thac level1:
+Ta sẽ lấy bản hexdump này về dùng ```xxd -r``` để convert nó sang binary. Sẽ có 3 challenge giống nhau như vậy. Các chương trình này chỉ khác nhau ở địa chỉ hàm ```win```. Khi ta lên shell thành công chương trình sẽ cung cấp ip , port và password cho challenge tiếp theo. Ở bài này ta tồn tại lỗi fomat string nên ta chỉ vần overwrite got_exit bằng địa chỉ hàm win ta sẽ có được shell. Code khai thac level1 (từ 1 -> 30):
 ```
 from pwn import *
 import os
@@ -52,7 +52,7 @@ while(1):
 p.interactive()
 
 ```
-Ở level2 cách thức cũng  giống như trên nhưng tác giả sẽ đổi binary với cách khai thác giống  đến challenge 46. Ở lv2 thì tác giả chuyển sang file binary 64 bit. Ở loại challenge này có lỗi format string gần giống như trên  mình overwrite got_puts bằng one_gadget (chỉ 3 byte cuối). Code khai thác :
+Ở level2 cách thức cũng  giống như trên nhưng tác giả sẽ đổi binary với cách khai thác giống  đến challenge 46. Ở lv2 thì tác giả chuyển sang file binary 64 bit. Ở loại challenge này có lỗi format string gần giống như trên  mình overwrite got_puts bằng one_gadget (chỉ 3 byte cuối). Code khai thác level2 (từ 31 -> 46):
 
 ```
 from pwn import *
@@ -163,7 +163,7 @@ constraints:
   [rsp+0x60] == NULL
 """
 ```
-Tiếp theo là Lv3. Ở level này thì vẫn khá giống level2 lỗi format string xảy ra. Chỉ khác 1 tí là pie enable. Nên ta sẽ leak thêm pie và overwite got_puts như level2. Code khai thác lv3:
+Tiếp theo là Lv3. Ở level này thì vẫn khá giống level2 lỗi format string xảy ra. Chỉ khác 1 tí là pie enable. Nên ta sẽ leak thêm pie và overwite got_puts như level2. Code khai thác lv3 (từ 46 -> 50):
 ```
 from pwn import *
 
