@@ -6,14 +6,16 @@ ___
 
 Sự xuất hiện của các cơ chế bảo vệ như Non-executable (NX) hay Data Execution Prevention (DEP) giúp chống thực thi code ở vùng nhớ không cho phép. Có nghĩa là khi chúng ta khai thác lỗ hổng Buffer Overflow (BOF) của một chương trình, nếu chương trình này có cơ chế bảo vệ NX hay DEP thì shellcode chúng ta chèn vào xem như vô dụng - bởi vì vùng nhớ lưu shellcode đã bị đánh dấu là không được thực thi.
 
-ROP là một kỹ thuật tấn công tận dụng các đoạn code có sẵn của chương trình (.code section) Ý tưởng chính là sử dụng các gadget hiện có trong chương trình trên cơ sở tràn bộ đệm ngăn xếp. Thay đổi giá trị của một số thanh ghi hoặc các biến để điều khiển luồng thực thi của chương trình. Gadget là các chuỗi lệnh kết thúc bằng ret. Thông qua các chuỗi lệnh này, chúng ta có thể sửa đổi nội dung của một số địa chỉ nhất định để tạo điều kiện thuận lợi cho việc kiểm soát luồng thực thi của chương trình.
+ROP là một kỹ thuật tấn công tận dụng các đoạn code có sẵn của chương trình (.code section). Ý tưởng chính là sử dụng các gadget hiện có trong chương trình trên cơ sở tràn bộ đệm ngăn xếp, hoặc bạn có thể tái sử dụng các plt (Procedure Linkage Table), tùy vào mục đích và tình huống khai thác . Thay đổi giá trị của một số thanh ghi hoặc các biến để điều khiển luồng thực thi của chương trình. Gadget là các chuỗi lệnh kết thúc bằng ret. Thông qua các chuỗi lệnh này, chúng ta có thể sửa đổi nội dung của một số địa chỉ nhất định để tạo điều kiện thuận lợi cho việc kiểm soát luồng thực thi của chương trình.
 
-Nó được gọi là ROP vì cốt lõi là sử dụng lệnh ret trong tập lệnh để thay đổi thứ tự thực thi của luồng lệnh. Các cuộc tấn công ROP thường phải đáp ứng các điều kiện sau:
 
-- Có một phần tràn trong chương trình và địa chỉ trả về có thể được kiểm soát.
+Các cuộc tấn công ROP thường thường có thể thực hiện  khi có các điều kiện sau:
 
-- Bạn có thể tìm thấy các gadget đáp ứng các điều kiện và địa chỉ của các gadget tương ứng.
-- Kỹ năng cơ bản của rop, bạn phải đọc hiểu 1 số lệnh assembly cơ bản như: mov , lea, leave, pop, push, syscall(x64), int 0x80 (32 bit tương đương với syscall trong x64), ret, jmp, call, ...
+
+- Có một phần tràn trong chương trình và địa chỉ trả về có thể được kiểm soát được return address trên stack.
+
+- -	Bạn đã biết chính xác địa chỉ của các gadget. 
+
 
 ## Ví dụ cơ bản:
 > # Challenge: [ROPbasic](https://github.com/shawking2/Writeup/blob/main/ROP/src/rop?raw=true)
@@ -109,7 +111,7 @@ pop_eax_ret = 0x080bb196
 pop_edx_ecx_ebx_ret = 0x0806eb90
 int_0x80 = 0x08049421
 binsh = 0x80be408
-payload = "A"*112 # 0x64 + 4
+payload = "A"*112
 payload += p32(pop_eax_ret)
 payload += p32(0xb)
 payload += p32(pop_edx_ecx_ebx_ret)
